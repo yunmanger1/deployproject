@@ -1,0 +1,1 @@
+This folder is used for packages, compilation stuff and so on.
