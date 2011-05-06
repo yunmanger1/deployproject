@@ -5,7 +5,7 @@ server {
     keepalive_timeout  30;
     
     location /media/ {
-        alias ../../../media/testproject/;
+        alias ../../media/testproject/;
     }
 
     error_page   500 502 503 504  /50x.html;

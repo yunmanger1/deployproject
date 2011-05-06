@@ -12,7 +12,7 @@ pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
 local_env=$pwd/env.local.sh
 
-WORK_ROOT=/home/german/work/django/deploytest
+WORK_ROOT=$(dirname ${pwd})
 PYTHONPATH=$WORK_ROOT/ondeploy
 
 if [ -r $local_env ]

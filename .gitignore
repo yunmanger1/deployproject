@@ -1,4 +1,7 @@
+bin/nginx
+bin/uwsgi
 conf/*.conf
+conf/*.media
 !conf/README.markdown
 distr/*
 !distr/README.markdown
@@ -11,6 +14,8 @@ ondeploy/*
 !ondeploy/README.markdown
 *.pid
 pkg/*
+projects/*
+!projects/testproject
 !pkg/README.markdown
 .hidden
 .pydevproject
