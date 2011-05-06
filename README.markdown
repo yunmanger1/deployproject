@@ -1,0 +1,1 @@
+This is my variant of django deploy. Supports multiple django projects on one nginx server.
