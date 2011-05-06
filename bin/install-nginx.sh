@@ -40,6 +40,8 @@ then
 fi
 tar -xvzf ${pcre_pack}.tar.gz
 
+sudo apt-get install libxml2-dev
+
 cd ${nginx_pack}
 ./configure --prefix=$WORK_ROOT/distr/nginx \
 --add-module=../${uwsgi_pack}/nginx/ \
