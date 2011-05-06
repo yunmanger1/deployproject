@@ -1,0 +1,53 @@
+#!/bin/bash
+
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+if [ ! $1 ]
+then
+  echo "specify project"
+  exit 1
+fi
+proj=$1
+
+if [ ! $WORK_ROOT ]
+then
+  echo "init"
+  source $pwd/startwork
+fi
+
+DESC="uWSGI"
+
+DEPLOY_DIR=$WORK_ROOT/ondeploy
+PROJECT_DIR=$DEPLOY_DIR/$proj
+INI_FILE=$PROJECT_DIR/etc/uwsgi.ini
+
+cd $WORK_ROOT
+
+startcmd="$pwd/uwsgi -d logs/$proj.wsgi.log --python-path $DEPLOY_DIR --ini=$INI_FILE --pidfile=pids/$proj.pid"
+stopcmd="kill -9 $(pidof uwsgi)"
+
+set -e
+case "$2" in
+start)
+  echo "Starting $DESC: "
+  $startcmd
+  ;;
+stop)
+  echo "Stopping $DESC: "
+  $stopcmd
+  ;;
+restart|force-reload)
+  echo "Restarting $DESC: "
+  $stopcmd
+  sleep 2
+  $startcmd
+  ;;
+reload)
+    echo "Reloading $DESC: "
+    kill -HUP `cat pids/$proj.pid`
+    ;;
+*)
+  echo "Usage: {start|stop|restart|reload|force-reload} {project}" >&2
+  exit 1
+  ;;
+esac
+exit 0

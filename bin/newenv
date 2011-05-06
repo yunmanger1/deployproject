@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+
+source $pwd/startwork
+
+mkvirtualenv $1 --no-site-packages

@@ -1,0 +1,11 @@
+conf/*
+distr/*
+envs/*
+logs/*
+media/*
+ondeploy/*
+pids/*
+pkg/*
+.hidden
+.pydevproject
+*.pyc

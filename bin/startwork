@@ -1,0 +1,29 @@
+#!/bin/bash
+
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+
+# место куда установлен virtualenv
+VE_HOME=$(dirname $(whereis virtualenv | awk '{print $2}'))
+
+# место куда установлен virtualenvwrapper
+VE_WRAPPER_HOME=$(dirname $(whereis virtualenvwrapper.sh | awk '{print $2}'))
+
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+
+local_env=$pwd/env.local.sh
+
+WORK_ROOT=/home/german/work/django/deploytest
+PYTHONPATH=$WORK_ROOT/ondeploy
+
+if [ -r $local_env ]
+then
+  . $local_env
+fi
+
+# место где храним environments
+WORKON_HOME=$WORK_ROOT/envs
+
+export WORKON_HOME
+export WORK_ROOT
+export PATH=$PATH:$VE_HOME
+source $VE_WRAPPER_HOME/virtualenvwrapper.sh

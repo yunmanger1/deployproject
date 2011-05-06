@@ -1,0 +1,47 @@
+#!/bin/bash
+
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+if [ ! $WORK_ROOT ]
+then
+  echo "init"
+  source $pwd/startwork
+fi
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+cd $WORK_ROOT
+DESC=SERVER
+
+set -e
+case "$2" in
+start)
+  echo "Starting $DESC: "
+  $pwd/uwsgiserver $1 $2
+  $pwd/deployserver $1 $2
+  sudo $pwd/nginxserver $2
+  ;;
+stop)
+  echo "Stopping $DESC: "
+  $pwd/uwsgiserver $1 $2
+  $pwd/deployserver $1 $2
+  sudo $pwd/nginxserver $2
+  ;;
+restart|force-reload)
+  echo "Restarting $DESC: "
+  $pwd/uwsgiserver $1 stop
+  $pwd/deployserver $1 stop
+  sudo $pwd/nginxserver stop
+  sleep 2
+  $pwd/uwsgiserver $1 start
+  $pwd/deployserver $1 start
+  sudo $pwd/nginxserver start
+  ;;
+reload)
+  echo  "Reloading: "
+  $pwd/uwsgiserver $1 $2
+  sudo $pwd/nginxserver $2
+    ;;
+*)
+  echo "Usage: {start|stop|restart|reload|force-reload} {project}" >&2
+  exit 1
+  ;;
+esac
+exit 0

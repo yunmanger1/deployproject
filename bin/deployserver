@@ -1,0 +1,56 @@
+#!/bin/bash
+
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+if [ ! $1 ]
+then
+  echo "specify project"
+  exit 1
+fi
+proj=$1
+
+if [ ! $WORK_ROOT ]
+then
+  echo "init"
+  source $pwd/startwork
+fi
+
+DEPLOY_DIR=$WORK_ROOT/ondeploy
+PROJECT_DIR=$DEPLOY_DIR/$proj
+NGINX_CONF=$WORK_ROOT/conf
+cd $WORK_ROOT
+
+DESC="Deploy"
+
+cd $WORK_ROOT
+
+set -e
+case "$2" in
+start)
+  echo "Starting $DESC: "
+  cp $PROJECT_DIR/etc/nginx.conf $NGINX_CONF/$proj.conf
+  cp $PROJECT_DIR/etc/nginx.media $NGINX_CONF/$proj.media
+  ;;
+stop)
+  echo "Stopping $DESC: "
+  rm $NGINX_CONF/$proj.conf
+  rm $NGINX_CONF/$proj.media
+  ;;
+restart|force-reload)
+  echo "Restarting $DESC: "
+  cp $PROJECT_DIR/etc/nginx.conf $NGINX_CONF/$proj.conf
+  cp $PROJECT_DIR/etc/nginx.media $NGINX_CONF/$proj.media
+  sleep 2
+  rm $NGINX_CONF/$proj.conf
+  rm $NGINX_CONF/$proj.media
+  ;;
+reload)
+  echo "Reloading $DESC: "
+  cp $PROJECT_DIR/etc/nginx.conf $NGINX_CONF/$proj.conf
+  cp $PROJECT_DIR/etc/nginx.media $NGINX_CONF/$proj.media
+  ;;
+*)
+  echo "Usage: {start|stop|restart|reload|force-reload} {project}" >&2
+  exit 1
+  ;;
+esac
+exit 0

@@ -1,0 +1,50 @@
+#!/bin/bash
+
+
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+if [ ! $1 ]
+then
+  echo "specify project"
+  exit 1
+fi
+
+if [ ! $WORK_ROOT ]
+then
+  echo "init"
+  source $pwd/startwork
+fi
+
+DESC="Nginx"
+
+
+cd $WORK_ROOT
+
+startcmd="$pwd/nginx"
+stopcmd="$pwd/nginx -s stop"
+
+set -e
+case "$1" in
+start)
+  echo "Starting $DESC: "
+  $startcmd
+  ;;
+stop)
+  echo "Stopping $DESC: "
+  $stopcmd
+  ;;
+restart|force-reload)
+  echo "Restarting $DESC: "
+  $stopcmd
+  sleep 2
+  $startcmd
+  ;;
+reload)
+    echo "Reloading $DESC: "
+    $pwd/nginx -s reload
+    ;;
+*)
+  echo "Usage nginxserver: {start|stop|restart|reload|force-reload} {project}" >&2
+  exit 1
+  ;;
+esac
+exit 0
