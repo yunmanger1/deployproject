@@ -28,6 +28,8 @@ make
 cp uwsgi $WORK_ROOT/bin
 cd ..
 
+git clone https://github.com/gnosek/nginx-upstream-fair.git fair
+
 if [ ! -e ${nginx_pack}.tar.gz ]
 then
   wget http://nginx.org/download/${nginx_pack}.tar.gz
@@ -46,6 +48,8 @@ cd ${nginx_pack}
 ./configure --prefix=$WORK_ROOT/distr/nginx \
 --add-module=../${uwsgi_pack}/nginx/ \
 --with-pcre=../${pcre_pack}/ \
+--with-http_ssl_module \
+--add-module=../fair/ \
 --user=$user \
 --group=$group
 make && make install
