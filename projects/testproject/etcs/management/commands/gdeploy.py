@@ -28,6 +28,6 @@ class Command(BaseCommand):
 #        _("bash {0}/bin/copy-project.sh {1}".format(WORK_ROOT, project_name))
         if os.path.exists("etc"):
             _("rm etc")
-        _("ln -s etcs/{0} etc".format(conf))
+        _("ln -s etcs/%s etc" % conf)
         deploy_media(conf)
 
