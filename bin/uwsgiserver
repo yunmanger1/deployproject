@@ -16,7 +16,7 @@ fi
 
 DESC="uWSGI"
 
-DEPLOY_DIR=$WORK_ROOT/ondeploy
+DEPLOY_DIR=$WORK_ROOT/projects
 PROJECT_DIR=$DEPLOY_DIR/$proj
 INI_FILE=$PROJECT_DIR/etc/uwsgi.ini
 

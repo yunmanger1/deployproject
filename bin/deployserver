@@ -14,7 +14,7 @@ then
   source $pwd/startwork
 fi
 
-DEPLOY_DIR=$WORK_ROOT/ondeploy
+DEPLOY_DIR=$WORK_ROOT/projects
 PROJECT_DIR=$DEPLOY_DIR/$proj
 NGINX_CONF=$WORK_ROOT/conf
 cd $WORK_ROOT
@@ -27,21 +27,45 @@ set -e
 case "$2" in
 start)
   echo "Starting $DESC: "
-  cp $PROJECT_DIR/etc/nginx.conf $NGINX_CONF/$proj.conf
-  cp $PROJECT_DIR/etc/nginx.media $NGINX_CONF/$proj.media
+  if [ -e $PROJECT_DIR/etc/nginx.conf ]
+  then
+    cp $PROJECT_DIR/etc/nginx.conf $NGINX_CONF/$proj.conf
+  fi
+  if [ -e $PROJECT_DIR/etc/nginx.media ]
+  then
+    cp $PROJECT_DIR/etc/nginx.media $NGINX_CONF/$proj.media
+  fi
   ;;
 stop)
   echo "Stopping $DESC: "
-  rm $NGINX_CONF/$proj.conf
-  rm $NGINX_CONF/$proj.media
+  if [ -e $NGINX_CONF/$proj.conf ]
+  then
+    rm $NGINX_CONF/$proj.conf
+  fi
+  if [ -e $NGINX_CONF/$proj.media ]
+  then
+    rm $NGINX_CONF/$proj.media
+  fi
   ;;
 restart|force-reload)
   echo "Restarting $DESC: "
-  cp $PROJECT_DIR/etc/nginx.conf $NGINX_CONF/$proj.conf
-  cp $PROJECT_DIR/etc/nginx.media $NGINX_CONF/$proj.media
+  if [ -e $PROJECT_DIR/etc/nginx.conf ]
+  then
+    cp $PROJECT_DIR/etc/nginx.conf $NGINX_CONF/$proj.conf
+  fi
+  if [ -e $PROJECT_DIR/etc/nginx.media ]
+  then
+    cp $PROJECT_DIR/etc/nginx.media $NGINX_CONF/$proj.media
+  fi
   sleep 2
-  rm $NGINX_CONF/$proj.conf
-  rm $NGINX_CONF/$proj.media
+  if [ -e $NGINX_CONF/$proj.conf ]
+  then
+    rm $NGINX_CONF/$proj.conf
+  fi
+  if [ -e $NGINX_CONF/$proj.media ]
+  then
+    rm $NGINX_CONF/$proj.media
+  fi
   ;;
 reload)
   echo "Reloading $DESC: "
