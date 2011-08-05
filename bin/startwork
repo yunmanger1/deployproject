@@ -1,12 +1,12 @@
 #!/bin/bash
 
-pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+pwd=$( dirname $BASH_SOURCE)
 
 # место куда установлен virtualenv
-VE_HOME=$(dirname $(whereis virtualenv | awk '{print $2}'))
+VE_HOME=$(dirname $(which virtualenv))
 
 # место куда установлен virtualenvwrapper
-VE_WRAPPER_HOME=$(dirname $(whereis virtualenvwrapper.sh | awk '{print $2}'))
+VE_WRAPPER_HOME=$(dirname $(which virtualenvwrapper.sh))
 
 pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
