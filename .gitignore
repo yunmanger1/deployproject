@@ -19,4 +19,6 @@ projects/*
 !pkg/README.markdown
 .hidden
 .pydevproject
+libs/*
 *.pyc
+static

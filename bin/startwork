@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pwd=$( dirname $BASH_SOURCE)
+pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
 # место куда установлен virtualenv
 VE_HOME=$(dirname $(which virtualenv))
@@ -26,4 +26,4 @@ WORKON_HOME=$WORK_ROOT/envs
 export WORKON_HOME
 export WORK_ROOT
 export PATH=$PATH:$VE_HOME
-source $VE_WRAPPER_HOME/virtualenvwrapper.sh
+. $VE_WRAPPER_HOME/virtualenvwrapper.sh
