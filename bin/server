@@ -11,33 +11,39 @@ cd $WORK_ROOT
 DESC=SERVER
 
 set -e
-case "$2" in
+case "$1" in
 start)
   echo "Starting $DESC: "
-  $pwd/uwsgiserver $1 $2
-  $pwd/deployserver $1 $2
-  sudo $pwd/nginxserver $2
+#  $pwd/uwsgiserver $1 $2
+#  $pwd/deployserver $1 $2
+  sudo $pwd/nginxserver $1
+  $pwd/supervisorserver $1
   ;;
 stop)
   echo "Stopping $DESC: "
-  $pwd/uwsgiserver $1 $2
-  $pwd/deployserver $1 $2
-  sudo $pwd/nginxserver $2
+#  $pwd/uwsgiserver $1 $2
+#  $pwd/deployserver $1 $2
+  sudo $pwd/nginxserver $1
+  $pwd/supervisorserver $1
   ;;
 restart|force-reload)
   echo "Restarting $DESC: "
-  $pwd/uwsgiserver $1 stop
-  $pwd/deployserver $1 stop
+#  $pwd/uwsgiserver $1 stop
+#  $pwd/deployserver $1 stop
   sudo $pwd/nginxserver stop
+  $pwd/supervisorserver stop
   sleep 2
-  $pwd/uwsgiserver $1 start
-  $pwd/deployserver $1 start
+#  $pwd/uwsgiserver $1 start
+#  $pwd/deployserver $1 start
   sudo $pwd/nginxserver start
+  $pwd/supervisorserver start
+
   ;;
 reload)
   echo  "Reloading: "
-  $pwd/uwsgiserver $1 $2
-  sudo $pwd/nginxserver $2
+#  $pwd/uwsgiserver $1
+  sudo $pwd/nginxserver $1
+  $pwd/supervisorserver $1
     ;;
 *)
   echo "Usage: {start|stop|restart|reload|force-reload} {project}" >&2

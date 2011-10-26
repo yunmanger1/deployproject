@@ -6,14 +6,15 @@ pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 VE_HOME=$(dirname $(which virtualenv))
 
 # место куда установлен virtualenvwrapper
-VE_WRAPPER_HOME=$(dirname $(which virtualenvwrapper.sh))
+#VE_WRAPPER_HOME=$(dirname $(which virtualenvwrapper.sh))
 
 pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
 local_env=$pwd/env.local.sh
 
 WORK_ROOT=$(dirname ${pwd})
-PYTHONPATH=$WORK_ROOT/ondeploy
+PYTHONPATH=$WORK_ROOT/projects
+#VIRTUALENVWRAPPER_LOG_DIR=logs
 
 if [ -r $local_env ]
 then
@@ -25,5 +26,5 @@ WORKON_HOME=$WORK_ROOT/envs
 
 export WORKON_HOME
 export WORK_ROOT
-export PATH=$PATH:$VE_HOME
-. $VE_WRAPPER_HOME/virtualenvwrapper.sh
+export PATH=$PATH:$VE_HOME:$WORK_ROOT/bin
+#. $VE_WRAPPER_HOME/virtualenvwrapper.sh

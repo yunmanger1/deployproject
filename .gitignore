@@ -5,9 +5,12 @@ conf/*.media
 !conf/README.markdown
 distr/*
 !distr/README.markdown
+!distr/nginx.conf
+!distr/supervisord.conf
 envs/*
 !envs/README.markdown
 *.log
+*.err
 media/*
 !media/README.markdown
 ondeploy/*

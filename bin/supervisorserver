@@ -1,20 +1,22 @@
 #!/bin/bash
 
-
 pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+
 if [ ! $WORK_ROOT ]
 then
   echo "init"
   source $pwd/startwork
 fi
 
-DESC="Nginx"
+DESC="Supervisord"
 
+DEPLOY_DIR=$WORK_ROOT/projects
+PROJECT_DIR=$DEPLOY_DIR/$proj
+INI_FILE=$PROJECT_DIR/etc/uwsgi.ini
 
 cd $WORK_ROOT
 
-startcmd="$pwd/nginx -p . -c conf/nginx.conf"
-stopcmd="$pwd/nginx -p . -s stop"
+startcmd="supervisord -c conf/supervisord.conf --pidfile=pids/supervisord.pid"
 
 set -e
 case "$1" in
@@ -24,20 +26,20 @@ start)
   ;;
 stop)
   echo "Stopping $DESC: "
-  $stopcmd
+  kill -SIGTERM `cat pids/supervisord.pid`
   ;;
 restart|force-reload)
   echo "Restarting $DESC: "
-  $stopcmd
+  kill -SIGTERM `cat pids/supervisord.pid`
   sleep 2
   $startcmd
   ;;
 reload)
     echo "Reloading $DESC: "
-    $pwd/nginx -s reload
+    kill -SIGHUP `cat pids/supervisord.pid`
     ;;
 *)
-  echo "Usage nginxserver: {start|stop|restart|reload|force-reload} {project}" >&2
+  echo "Usage: {start|stop|restart|reload|force-reload} {project}" >&2
   exit 1
   ;;
 esac
