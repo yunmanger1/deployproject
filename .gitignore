@@ -24,4 +24,5 @@ projects/*
 .pydevproject
 libs/*
 *.pyc
-static
+static/*
+!static/README.markdown
