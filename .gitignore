@@ -26,3 +26,5 @@ libs/*
 *.pyc
 static/*
 !static/README.markdown
+workspace
+conf/*

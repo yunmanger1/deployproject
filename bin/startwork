@@ -26,5 +26,5 @@ WORKON_HOME=$WORK_ROOT/envs
 
 export WORKON_HOME
 export WORK_ROOT
-export PATH=$PATH:$VE_HOME:$WORK_ROOT/bin
+export PATH=$PATH:$VE_HOME:$WORK_ROOT/bin:$WORK_ROOT/distr/nginx/sbin
 #. $VE_WRAPPER_HOME/virtualenvwrapper.sh

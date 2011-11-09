@@ -2,6 +2,12 @@
 
 pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
-source $pwd/startwork
+. $pwd/startwork
 
-mkvirtualenv $1 --no-site-packages
+if [ $1 ]
+then
+	virtualenv --no-site-packages $WORK_ROOT/envs/$1
+else
+	echo "newenv ENV_NAME"
+fi
+

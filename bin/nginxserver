@@ -12,9 +12,10 @@ DESC="Nginx"
 
 
 cd $WORK_ROOT
+NGINX_HOME=$WORK_ROOT/distr/nginx
 
-startcmd="$pwd/nginx -p . -c conf/nginx.conf"
-stopcmd="$pwd/nginx -p . -s stop"
+startcmd="$NGINX_HOME/sbin/nginx -p . -c conf/nginx.conf"
+stopcmd="$NGINX_HOME/sbin/nginx -p . -s stop"
 
 set -e
 case "$1" in
