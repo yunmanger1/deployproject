@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
@@ -16,7 +16,7 @@ INI_FILE=$PROJECT_DIR/etc/uwsgi.ini
 
 cd $WORK_ROOT
 
-startcmd="supervisord -c conf/supervisord.conf --pidfile=pids/supervisord.pid"
+startcmd="${VIRTUAL_ENV}/bin/supervisord -c conf/supervisord.conf --pidfile=pids/supervisord.pid"
 
 set -e
 case "$1" in
@@ -26,17 +26,17 @@ start)
   ;;
 stop)
   echo "Stopping $DESC: "
-  kill -SIGTERM `cat pids/supervisord.pid`
+  kill -s TERM `cat pids/supervisord.pid`
   ;;
 restart|force-reload)
   echo "Restarting $DESC: "
-  kill -SIGTERM `cat pids/supervisord.pid`
-  sleep 2
+  kill -s TERM `cat pids/supervisord.pid`
+  sleep 5
   $startcmd
   ;;
 reload)
     echo "Reloading $DESC: "
-    kill -SIGHUP `cat pids/supervisord.pid`
+    kill -s HUP `cat pids/supervisord.pid`
     ;;
 *)
   echo "Usage: {start|stop|restart|reload|force-reload} {project}" >&2
