@@ -14,8 +14,9 @@ DESC="Nginx"
 cd $WORK_ROOT
 NGINX_HOME=$WORK_ROOT/distr/nginx
 
-startcmd="$NGINX_HOME/sbin/nginx -p . -c conf/nginx.conf"
-stopcmd="$NGINX_HOME/sbin/nginx -p . -s stop"
+startcmd="sudo $NGINX_HOME/sbin/nginx"
+stopcmd="sudo $NGINX_HOME/sbin/nginx -s stop"
+reloadcmd="sudo $NGINX_HOME/sbin/nginx -s reload"
 
 set -e
 case "$1" in
@@ -35,7 +36,7 @@ restart|force-reload)
   ;;
 reload)
     echo "Reloading $DESC: "
-    $pwd/nginx -s reload
+    $reloadcmd
     ;;
 *)
   echo "Usage nginxserver: {start|stop|restart|reload|force-reload} {project}" >&2

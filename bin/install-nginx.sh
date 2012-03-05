@@ -12,9 +12,9 @@ fi
 
 cd $PKG_DIR
 
-uwsgi_pack=uwsgi-0.9.7.2
-nginx_pack=nginx-0.7.65
-pcre_pack=pcre-8.12
+uwsgi_pack=uwsgi-1.0.4
+nginx_pack=nginx-1.0.12
+pcre_pack=pcre-8.21
 user=$(whoami)
 group=$(whoami)
 
@@ -42,11 +42,24 @@ then
 fi
 tar -xvzf ${pcre_pack}.tar.gz
 
-sudo apt-get install libxml2-dev
+#sudo apt-get install libxml2-dev
+
+if [ ! -e $WORK_ROOT/distr/nginx ]
+then
+  mkdir $WORK_ROOT/distr/nginx
+fi
+
+#if [ ! -e $WORK_ROOT/distr/nginx/logs ]
+#then
+#  mkdir $WORK_ROOT/distr/nginx/logs
+#fi
 
 cd ${nginx_pack}
 ./configure --prefix=$WORK_ROOT/distr/nginx \
---add-module=../${uwsgi_pack}/nginx/ \
+--conf-path=$WORK_ROOT/conf/nginx.conf \
+--pid-path=../../pids/nginx.pid \
+--error-log-path=../../logs/nginx.error.log \
+--http-log-path=../../logs/nginx.access.log \
 --with-pcre=../${pcre_pack}/ \
 --with-http_ssl_module \
 --add-module=../fair/ \
