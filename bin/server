@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+pwd=$( cd "$( dirname "$BASH_SOURCE" )"; pwd )
 if [ ! $WORK_ROOT ]
 then
   echo "init"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+pwd=$( cd "$( dirname "$BASH_SOURCE" )"; pwd )
 
 # место куда установлен virtualenv
 VE_HOME=$(dirname $(which virtualenv))
@@ -8,7 +8,7 @@ VE_HOME=$(dirname $(which virtualenv))
 # место куда установлен virtualenvwrapper
 #VE_WRAPPER_HOME=$(dirname $(which virtualenvwrapper.sh))
 
-pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
+#pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
 local_env=$pwd/env.local.sh
 
